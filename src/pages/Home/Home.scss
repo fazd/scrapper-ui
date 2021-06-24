@@ -1,5 +1,5 @@
 .main-container {
-  background-color: #121212;
+  background-color: #343a40 !important;
   color: white;
   min-width: 100vw;
   min-height: 100vh;
@@ -7,4 +7,17 @@
 
 .divider {
   margin-left: 0.7rem;
+}
+
+.graph {
+  height: 60vh;
+  width: 100vw !important;
+}
+
+svg > g > g:nth-child(3) > text {
+  fill: white !important;
+}
+
+svg > g > g > g > text {
+  fill: white !important;
 }

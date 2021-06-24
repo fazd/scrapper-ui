@@ -1,6 +1,5 @@
 import React from 'react';
 import './Navbar.scss';
-import Logo from '../../assets/balance-scale-right-solid.svg';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
