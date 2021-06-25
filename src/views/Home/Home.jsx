@@ -2,18 +2,35 @@ import React, {useState} from 'react';
 import './Home.scss';
 import Header from '../../components/Navbar/Navbar';
 import Graph from '../../components/Graph/Graph';
-import { FormControl, Container, Row, Col, Form, Button, Collapse } from 'react-bootstrap';
+import { 
+  FormControl,
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Collapse,
+  Spinner
+} from 'react-bootstrap';
 import { searchDates } from '../../services/api';
+import PriceCard from '../../components/Price-Card/Price-Card';
 
 const Home = () => {
 
   const [link, setLink] = useState('');
   const [open, setOpen] = useState(false); 
+  const [product, setProduct] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async () => {
     if(link) {
+      setIsLoading(true);
       const response = await searchDates({link});
       console.log("response", response);
+      if(response) {
+        setProduct(response.product);
+        setIsLoading(false);
+      }
     } else {
       setOpen(true);
       setTimeout(() => {
@@ -21,6 +38,7 @@ const Home = () => {
       }, 4000);
     }
   }
+
 
 
   return (
@@ -54,21 +72,38 @@ const Home = () => {
                 variant="primary"
                 className="divider"
                 onClick={onSubmit}  
-              >Search</Button>                  
+              >{isLoading ?   <Spinner animation="border" variant="primary" size="sm" />
+                : 'Search'}
+              </Button>                  
             </Col>
           
           </Row>
-          <Row className="my-4 w-100">
-            <Col className="graph mb-5 w-100">
-              <h3>Resultado </h3>
-              <div className="d-flex flex-column">
-                <span>Precio más Bajo: {0}</span>
-                <span>Precio más alto: {0}</span>
+          {product.name ? <>
+          <Row className="my-4 w-100 d-flex flex-column">
+            <h3 className="mb-5">Resultado del producto</h3>
+            <h4 className="text-center">{product.name}</h4>
+            <div className="d-flex flex-row justify-content-center">
+              <Col xs="3" className="d-flex justify-content-center align-items-center">
+                <img src={product.imageUrl} alt={product.name} className="img rounded-img" />
+              </Col>
+              <Col xs="7" className="mt-3 mb-4 w-100 d-flex justify-content-center flex-row flex-wrap">
+                <PriceCard className="my-3 mx-2 w-40" status={'up'} cardName="más alto"/>
+                <PriceCard className="my-3 mx-2 w-40" status={'down'} cardName="más bajo"/>
+                <PriceCard className="my-3 mx-2 w-40" status={'equal'} cardName="Promedio"/>
+                <PriceCard className="my-3 mx-2 w-40" status={'up'} cardName="Actual"/>
+              </Col>
+
+            </div>
+          </Row> 
+          <Row>
+            <Col>
+              <div className="graph w-100">
+                <Graph />
               </div>
-              <Graph />
             </Col>
           </Row>
-          <Row className="mt-5" id="about">
+          </> : null}
+          <Row className="mt-5 pb-4" id="about">
             <Col>
               <h3 className="text-center mb-3">¿De qué trata este proyecto?</h3>
               <p>

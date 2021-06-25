@@ -2,8 +2,8 @@ import React from 'react';
 import './Navbar.scss';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBalanceScale } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBalanceScale } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
   return (

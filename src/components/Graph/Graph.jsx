@@ -1,13 +1,12 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line'
-
+import './Graph.scss';
 
 const Graph = () => {
 
   const data = [
     {
       id: "TV 55 pulgadas ",
-      color: "rgb(255,255,255)",
       data: [
         {
           "x": "10/06/21",
@@ -39,7 +38,7 @@ const Graph = () => {
         },
         {
           "x": "17/06/21",
-          "y": 1900000
+          "y": 2000000
         },
         {
           "x": "18/06/21",

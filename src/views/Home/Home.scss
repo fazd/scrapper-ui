@@ -1,3 +1,7 @@
+* {
+  scroll-behavior: smooth;
+}
+
 .main-container {
   background-color: #343a40 !important;
   color: white;
@@ -14,10 +18,11 @@
   width: 100vw !important;
 }
 
-svg > g > g:nth-child(3) > text {
-  fill: white !important;
+.rounded-img {
+  border-radius: 20px;
 }
 
-svg > g > g > g > text {
-  fill: white !important;
+.img {
+  max-height: 250px;
+  max-width: 250px;
 }

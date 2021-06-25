@@ -1,0 +1,7 @@
+svg > g > g:nth-child(3) > text {
+  fill: white !important;
+}
+
+svg > g > g > g > text {
+  fill: white !important;
+}
