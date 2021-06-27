@@ -84,21 +84,27 @@ const Home = () => {
               <Col xs="12">
                 <h4 className="text-center">{'Celular SAMSUNG Galaxy A01 Core 16GB Negro'}</h4>
               </Col>
-              <Col xs="12" className="d-flex justify-content-center align-items-center mt-5 mb-4">
-                <img src={'https://www.alkosto.com/medias/8806090626104-001-310Wx310H?context=bWFzdGVyfGltYWdlc3w0MDYzMXxpbWFnZS9qcGVnfGltYWdlcy9oYzEvaDJhLzk4MjIyMTU4OTcxMTguanBnfDEzNGFiMDBkNTM1MTkxNDJiMjFmZDVmZjUzYTVhMWQ1NzhlYTA0ZGJjZGYyZTUxNzZlMjExZDgzYjUzYmE5NTY'} alt={product.name} className="img rounded-img" />
-              </Col>
-              <Col xs="12" md="5">
-                <PriceCard className="my-3 mx-2 w-40" status={'up'} cardName="más alto" />
-              </Col>
-              <Col xs="12" md="5">
-                <PriceCard className="my-3 mx-2 w-40" status={'down'} cardName="más bajo" />
-              </Col>
-              <Col xs="12" md="5">
-                <PriceCard className="my-3 mx-2 w-40" status={'equal'} cardName="Promedio" />
-              </Col>
-              <Col xs="12" md="5">
-                <PriceCard className="my-3 mx-2 w-40" status={'up'} cardName="Actual" />
-              </Col>
+            </ Row>
+            <Row className="d-flex ml-3">
+              <Row className="mr-3">
+                <Col xs="12" md="3" className="d-flex justify-content-start align-items-center mt-5 mb-4">
+                  <img src={'https://www.alkosto.com/medias/8806090626104-001-310Wx310H?context=bWFzdGVyfGltYWdlc3w0MDYzMXxpbWFnZS9qcGVnfGltYWdlcy9oYzEvaDJhLzk4MjIyMTU4OTcxMTguanBnfDEzNGFiMDBkNTM1MTkxNDJiMjFmZDVmZjUzYTVhMWQ1NzhlYTA0ZGJjZGYyZTUxNzZlMjExZDgzYjUzYmE5NTY'} alt={product.name} className="img rounded-img" />
+                </Col>
+              </Row>
+              <Row className="d-flex justify-content-center align-items-center w-75 ">
+                <Col xs="12" md="5">
+                  <PriceCard className="my-3 mx-2 w-40" status={'up'} cardName="más alto" />
+                </Col>
+                <Col xs="12" md="5">
+                  <PriceCard className="my-3 mx-2 w-40" status={'down'} cardName="más bajo" />
+                </Col>
+                <Col xs="12" md="5">
+                  <PriceCard className="my-3 mx-2 w-40" status={'equal'} cardName="Promedio" />
+                </Col>
+                <Col xs="12" md="5">
+                  <PriceCard className="my-3 mx-2 w-40" status={'up'} cardName="Actual" />
+                </Col>
+              </Row>
             </Row>
             <Row>
               <Col>
