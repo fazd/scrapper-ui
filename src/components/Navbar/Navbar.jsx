@@ -11,10 +11,10 @@ const Header = () => {
       <Navbar bg="dark" variant="dark" expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Brand href="/">
-        <FontAwesomeIcon icon={faBalanceScale} size="lg" />
+          <FontAwesomeIcon icon={faBalanceScale} />
 
-            <span className="ml-3">¿En realidad es una oferta?</span>
-          </Navbar.Brand>
+          <span className="ml-3">¿En realidad es una oferta?</span>
+        </Navbar.Brand>
         <Navbar.Collapse id="basic-navbar-nav" >
           <Nav.Link className="justify-content-start text-white" href="#about">Sobre el proyecto</Nav.Link>
         </Navbar.Collapse>
