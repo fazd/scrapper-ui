@@ -12,7 +12,7 @@ import {
   Collapse,
   Spinner
 } from 'react-bootstrap';
-import { searchDates } from '../../services/api';
+import { searchDates, searchAvg } from '../../services/api';
 import PriceCard from '../../components/Price-Card/Price-Card';
 
 const Home = () => {
@@ -20,15 +20,23 @@ const Home = () => {
   const [link, setLink] = useState('');
   const [open, setOpen] = useState(false);
   const [product, setProduct] = useState({});
+  const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async () => {
     if (link) {
       setIsLoading(true);
       const response = await searchDates({ link });
-      console.log("response", response);
       if (response) {
-        setProduct(response.product);
+        let pr = response.product;
+        if (!response.product?.average) {
+          const average = await searchAvg({ link });
+          console.log(average);
+          pr.average = average[0].avg;
+          console.log(pr.average);
+        }
+        setProduct(pr);
+        setData(parseData(response.product.name, response.data));
         setIsLoading(false);
       }
     } else {
@@ -37,6 +45,46 @@ const Home = () => {
         setOpen(false);
       }, 4000);
     }
+  }
+
+  const percentageProm = (average, value) => {
+    const aux = value / average;
+    return aux - 1;
+  }
+
+  const getActualIcon = () => {
+    const st = percentageProm(product.average, product.maximunPrice);
+    if (st < 0) return 'down';
+    if (st === 0) return 'equal';
+    if (st > 0) return 'up';
+  };
+
+
+  const formatDate = (d) => {
+    const day = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
+    const month = d.getMonth() + 1 < 10 ? `0${d.getMonth()}` : d.getMonth();
+    const year = d.getFullYear() % 100;
+    return `${day}/${month}/${year}`;
+  }
+
+  const parseData = (name, info) => {
+    const newData = info.map((element) => {
+      const dd = new Date(element.date);
+
+      console.log("dd", formatDate(dd));
+      return {
+        y: element.price,
+        x: formatDate(dd),
+      }
+    });
+    console.log({
+      id: product.name,
+      data: newData,
+    });
+    return [{
+      id: product.name,
+      data: newData,
+    }];
   }
 
   return (
@@ -76,40 +124,64 @@ const Home = () => {
             </Col>
 
           </Row>
-          {true ? <>
+          {product.name ? <>
             <Row className="my-4 w-100 d-flex flex-wrap">
               <Col xs="12">
                 <h3 className="mb-5">Resultado del producto</h3>
               </Col>
               <Col xs="12">
-                <h4 className="text-center">{'Celular SAMSUNG Galaxy A01 Core 16GB Negro'}</h4>
+                <h4 className="text-center">{product.name}</h4>
               </Col>
             </ Row>
             <Row className="d-flex ml-3">
               <Row className="mr-3">
-                <Col xs="12" md="3" className="d-flex justify-content-start align-items-center mt-5 mb-4">
-                  <img src={'https://www.alkosto.com/medias/8806090626104-001-310Wx310H?context=bWFzdGVyfGltYWdlc3w0MDYzMXxpbWFnZS9qcGVnfGltYWdlcy9oYzEvaDJhLzk4MjIyMTU4OTcxMTguanBnfDEzNGFiMDBkNTM1MTkxNDJiMjFmZDVmZjUzYTVhMWQ1NzhlYTA0ZGJjZGYyZTUxNzZlMjExZDgzYjUzYmE5NTY'} alt={product.name} className="img rounded-img" />
+                <Col xs="12" md="3" className="d-flex justify-content-start align-items-center mt-4 mb-4">
+                  <img src={product.imageUrl} alt={product.name} className="img rounded-img" />
                 </Col>
               </Row>
               <Row className="d-flex justify-content-center align-items-center w-75 ">
                 <Col xs="12" md="5">
-                  <PriceCard className="my-3 mx-2 w-40" status={'up'} cardName="más alto" />
+                  <PriceCard
+                    className="my-3 mx-2 w-40"
+                    status={'up'}
+                    cardName="más alto"
+                    val={product.maximunPrice}
+                    prom={percentageProm(product.average, product.maximunPrice)}
+                  />
                 </Col>
                 <Col xs="12" md="5">
-                  <PriceCard className="my-3 mx-2 w-40" status={'down'} cardName="más bajo" />
+                  <PriceCard
+                    className="my-3 mx-2 w-40"
+                    status={'down'}
+                    cardName="más bajo"
+                    val={product.minimunPrice}
+                    prom={percentageProm(product.average, product.minimunPrice)}
+                  />
                 </Col>
                 <Col xs="12" md="5">
-                  <PriceCard className="my-3 mx-2 w-40" status={'equal'} cardName="Promedio" />
+                  <PriceCard
+                    className="my-3 mx-2 w-40"
+                    status={'equal'}
+                    cardName="Promedio"
+                    val={product.average}
+                    prom={percentageProm(product.average, product.average)}
+                  />
                 </Col>
                 <Col xs="12" md="5">
-                  <PriceCard className="my-3 mx-2 w-40" status={'up'} cardName="Actual" />
+                  <PriceCard
+                    className="my-3 mx-2 w-40"
+                    status={getActualIcon()}
+                    cardName="Actual"
+                    val={product.minimunPrice}
+                    prom={percentageProm(product.average, product.maximunPrice)}
+                  />
                 </Col>
               </Row>
             </Row>
             <Row>
               <Col>
                 <div className="graph w-100">
-                  <Graph />
+                  <Graph dataInfo={data} />
                 </div>
               </Col>
             </Row>
