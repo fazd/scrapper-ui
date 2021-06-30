@@ -10,7 +10,7 @@ const formatValue = value => `$${Number(value).toFixed(2)}`;
 const percValue = value => `${Number(value).toFixed(2)}%`;
 
 
-export default function PriceCard({val=0, cardName, status=true, prom=0, className}) {
+export default function PriceCard({val=0, cardName, status='equal', prom=0, className}) {
   
   const green = "#118C4F";
   const red = "#DC143C";
@@ -30,7 +30,6 @@ export default function PriceCard({val=0, cardName, status=true, prom=0, classNa
       color: gray,
     }
   }
-
 
   return (
     <Card className={className}>
@@ -59,7 +58,7 @@ export default function PriceCard({val=0, cardName, status=true, prom=0, classNa
 PriceCard.propTypes = {
   value: PropTypes.number,
   cardName: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
+  status: PropTypes.string,
   percentage: PropTypes.number,
 }
 

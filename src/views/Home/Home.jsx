@@ -14,12 +14,13 @@ import {
 } from 'react-bootstrap';
 import { searchDates, searchAvg } from '../../services/api';
 import PriceCard from '../../components/Price-Card/Price-Card';
+import { formatDate, getActualIcon, percentageProm } from '../../utils';
 
 const Home = () => {
 
   const [link, setLink] = useState('');
   const [open, setOpen] = useState(false);
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(null);
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,6 +35,7 @@ const Home = () => {
           console.log(average);
           pr.average = average[0].avg;
           console.log(pr.average);
+
         }
         setProduct(pr);
         setData(parseData(response.product.name, response.data));
@@ -47,42 +49,24 @@ const Home = () => {
     }
   }
 
-  const percentageProm = (average, value) => {
-    const aux = value / average;
-    return aux - 1;
-  }
-
-  const getActualIcon = () => {
-    const st = percentageProm(product.average, product.maximunPrice);
-    if (st < 0) return 'down';
-    if (st === 0) return 'equal';
-    if (st > 0) return 'up';
-  };
 
 
-  const formatDate = (d) => {
-    const day = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
-    const month = d.getMonth() + 1 < 10 ? `0${d.getMonth()}` : d.getMonth();
-    const year = d.getFullYear() % 100;
-    return `${day}/${month}/${year}`;
-  }
 
   const parseData = (name, info) => {
     const newData = info.map((element) => {
       const dd = new Date(element.date);
 
-      console.log("dd", formatDate(dd));
       return {
         y: element.price,
         x: formatDate(dd),
       }
     });
     console.log({
-      id: product.name,
+      id: name,
       data: newData,
     });
     return [{
-      id: product.name,
+      id: name,
       data: newData,
     }];
   }
@@ -124,7 +108,7 @@ const Home = () => {
             </Col>
 
           </Row>
-          {product.name ? <>
+          {product?.name && !isLoading ? <>
             <Row className="my-4 w-100 d-flex flex-wrap">
               <Col xs="12">
                 <h3 className="mb-5">Resultado del producto</h3>
@@ -167,15 +151,15 @@ const Home = () => {
                     prom={percentageProm(product.average, product.average)}
                   />
                 </Col>
-                <Col xs="12" md="5">
+                {product ? <Col xs="12" md="5">
                   <PriceCard
                     className="my-3 mx-2 w-40"
-                    status={getActualIcon()}
+                    status={getActualIcon(product)}
                     cardName="Actual"
                     val={product.minimunPrice}
                     prom={percentageProm(product.average, product.maximunPrice)}
                   />
-                </Col>
+                </Col>: null}
               </Row>
             </Row>
             <Row>

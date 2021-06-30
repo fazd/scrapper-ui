@@ -126,74 +126,72 @@ const Graph = ({ dataInfo = [] }) => {
 
 
   return (
-    <>
-      <ResponsiveLine
-        data={isMobile ? dataDivided : dataInfo}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: 'point' }}
-        yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
-        yFormat=" >-.2f"
-        curve="stepAfter"
-        lineWidth="4"
-        axisTop={null}
-        axisRight={null}
-        axisBottom={!isMobile ? {
-          orient: 'bottom',
-          tickSize: 5,
-          tickPadding: 8,
-          tickRotation: 0,
-          legend: 'Fechas',
-          legendOffset: 40,
-          legendPosition: 'middle',
-          textColor: 'red',
-        } : null}
-        axisLeft={{
-          orient: 'right',
-          tickSize: 6,
-          tickPadding: 5,
-          tickRotation: 0,
-          legendOffset: -50,
-          legendPosition: 'middle',
-          legend: isMobile ? 'Precio en Millones' : ''
+    <ResponsiveLine
+      data={isMobile ? dataDivided : dataInfo}
+      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      xScale={{ type: 'point' }}
+      yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
+      yFormat=" >-.2f"
+      curve="stepAfter"
+      lineWidth="4"
+      axisTop={null}
+      axisRight={null}
+      axisBottom={!isMobile ? {
+        orient: 'bottom',
+        tickSize: 5,
+        tickPadding: 8,
+        tickRotation: 0,
+        legend: 'Fechas',
+        legendOffset: 40,
+        legendPosition: 'middle',
+        textColor: 'red',
+      } : null}
+      axisLeft={{
+        orient: 'right',
+        tickSize: 6,
+        tickPadding: 5,
+        tickRotation: 0,
+        legendOffset: -50,
+        legendPosition: 'middle',
+        legend: isMobile ? 'Precio en Millones' : ''
 
-        }}
-        colors={{ scheme: 'paired' }}
-        pointSize={10}
-        pointColor={{ from: 'color', modifiers: [] }}
-        pointBorderWidth={4}
-        pointBorderColor={{ from: 'serieColor', modifiers: [] }}
-        pointLabelYOffset={-12}
-        useMesh={false}
-        isInteractive={false}
-        legends={!isTablet ? [
-          {
-            anchor: 'bottom-right',
-            direction: 'column',
-            justify: false,
-            translateX: 90,
-            translateY: 0,
-            itemsSpacing: 0,
-            itemDirection: 'left-to-right',
-            itemWidth: 80,
-            itemHeight: 20,
-            itemOpacity: 0.75,
-            symbolSize: 12,
-            symbolShape: 'circle',
-            symbolBorderColor: 'rgba(0, 0, 0, .5)',
-            itemTextColor: 'black',
-            effects: [
-              {
-                on: 'hover',
-                style: {
-                  itemBackground: 'rgba(0, 0, 0, .03)',
-                  itemOpacity: 1
-                }
+      }}
+      colors={{ scheme: 'paired' }}
+      pointSize={10}
+      pointColor={{ from: 'color', modifiers: [] }}
+      pointBorderWidth={4}
+      pointBorderColor={{ from: 'serieColor', modifiers: [] }}
+      pointLabelYOffset={-12}
+      useMesh={false}
+      isInteractive={false}
+      legends={!isTablet ? [
+        {
+          anchor: 'bottom',
+          direction: 'column',
+          justify: false,
+          translateX: 90,
+          translateY: 50,
+          itemsSpacing: 0,
+          itemDirection: 'left-to-right',
+          itemWidth: 80,
+          itemHeight: 20,
+          itemOpacity: 0.75,
+          symbolSize: 12,
+          symbolShape: 'circle',
+          symbolBorderColor: 'rgba(0, 0, 0, .5)',
+          itemTextColor: 'black',
+          effects: [
+            {
+              on: 'hover',
+              style: {
+                itemBackground: 'rgba(0, 0, 0, .03)',
+                itemOpacity: 1
               }
-            ]
-          }
-        ] : []}
-      />
-    </>
+            }
+          ]
+        }
+      ] : []}
+    />
   );
 };
 
